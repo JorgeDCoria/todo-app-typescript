@@ -3,8 +3,9 @@ import { Todo } from "./Todo";
 
 interface Props {
   todos: ListOfTodos;
+  onRemoveTodo: (id: string) => void;
 }
-const Todos: React.FC<Props> = ({ todos }) => {
+const Todos: React.FC<Props> = ({ todos, onRemoveTodo }) => {
   return (
     <ul>
       {todos.map((todo) => (
@@ -13,6 +14,7 @@ const Todos: React.FC<Props> = ({ todos }) => {
           id={todo.id}
           title={todo.title}
           completed={todo.completed}
+          onRemoveTodo={onRemoveTodo}
         />
       ))}
     </ul>
