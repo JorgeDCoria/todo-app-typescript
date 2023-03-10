@@ -25,10 +25,23 @@ function App(): JSX.Element {
     const newTodos = todos.filter((todo) => todo.id !== id);
     setTodos(newTodos);
   };
+  const handleCompleted = (id: string, completed: boolean): void => {
+    const newTodos = todos.map((todo) => {
+      if (todo.id === id) return { ...todo, completed };
+      return todo;
+    });
+    setTodos(newTodos);
+  };
   return (
-    <div className="App">
-      <h1 className="text-2xl text-red-500">Hola mundo</h1>
-      <Todos onRemoveTodo={handleRemove} todos={todos} />
+    <div className="grid place-content-center">
+      <div className="grid place-content-center gap-4 bg-gray-100 w-96 p-4 min-h-[300px]">
+        <h1 className="text-2xl text-red-500 ">Hola mundo</h1>
+        <Todos
+          onRemoveTodo={handleRemove}
+          todos={todos}
+          onToggleCompletedTodo={handleCompleted}
+        />
+      </div>
     </div>
   );
 }

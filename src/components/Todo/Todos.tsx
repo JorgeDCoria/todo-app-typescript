@@ -4,10 +4,15 @@ import { Todo } from "./Todo";
 interface Props {
   todos: ListOfTodos;
   onRemoveTodo: (id: string) => void;
+  onToggleCompletedTodo: (id: string, completed: boolean) => void;
 }
-const Todos: React.FC<Props> = ({ todos, onRemoveTodo }) => {
+const Todos: React.FC<Props> = ({
+  todos,
+  onRemoveTodo,
+  onToggleCompletedTodo,
+}) => {
   return (
-    <ul>
+    <ul className="flex flex-col gap-2">
       {todos.map((todo) => (
         <Todo
           key={todo.id}
@@ -15,6 +20,7 @@ const Todos: React.FC<Props> = ({ todos, onRemoveTodo }) => {
           title={todo.title}
           completed={todo.completed}
           onRemoveTodo={onRemoveTodo}
+          onToggleCompletedTodo={onToggleCompletedTodo}
         />
       ))}
     </ul>
