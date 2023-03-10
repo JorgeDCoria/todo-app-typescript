@@ -10,8 +10,12 @@ module.exports = {
     sourceType: "module",
     project: "./tsconfig.json",
   },
+  settings: {
+    tailwindcss: { config: "tailwind.config.cjs" },
+  },
   plugins: ["react"],
   rules: {
     "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
   },
 };
