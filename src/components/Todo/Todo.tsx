@@ -10,17 +10,25 @@ export const Todo: React.FC<Props> = ({
   onRemoveTodo,
   onToggleCompletedTodo,
 }) => {
+  const handleCheck = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    onToggleCompletedTodo(id, e.target.checked);
+  };
   return (
-    <div>
+    <div
+      className={`h-10 p-2 w-full flex justify-between rounded-md ${
+        completed ? "bg-gray-400 line-through " : "bg-gray-700"
+      }  text-white`}
+    >
       <input
         type="checkbox"
         checked={completed}
         onChange={(e) => {
-          onToggleCompletedTodo(id, e.target.checked);
+          handleCheck(e);
         }}
       />
       <label htmlFor="">{title}</label>
       <button
+        className="bg-red-600 w-8 hover:bg-red-500"
         onClick={() => {
           onRemoveTodo(id);
         }}
