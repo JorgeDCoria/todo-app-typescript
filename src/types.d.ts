@@ -1,7 +1,7 @@
 import {type TODO_FILTERS } from "./consts";
 
 export interface Todo{
-  id: string;
+  id: string ;
   title: string;
   completed: boolean;
 }

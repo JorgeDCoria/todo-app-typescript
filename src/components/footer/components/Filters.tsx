@@ -8,6 +8,9 @@ interface Props {
 }
 
 const Filters: React.FC<Props> = ({ filterSelected, onFilterChange }) => {
+  const aux = Object.entries(FILTERS_BUTTONS);
+  console.log("🚀 ~ file: Filters.tsx:12 ~ aux:", aux);
+
   return (
     <ul>
       {Object.entries(FILTERS_BUTTONS).map(([key, { href, literal }]) => {

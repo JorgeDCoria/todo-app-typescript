@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Footer } from "./components/footer/Footer";
 import Todos from "./components/Todo/Todos";
 import { TODO_FILTERS } from "./consts";
-import { type FilterValue } from "./types";
+import { type Todo, type FilterValue } from "./types";
 
-const mockTodos = [
+const mockTodos: Todo[] = [
   {
     id: "1",
     title: "todo 1",
@@ -23,6 +23,7 @@ const mockTodos = [
 ];
 function App(): JSX.Element {
   const [todos, setTodos] = useState(mockTodos);
+  const [input, setInput] = useState("");
   const [filterSelected, setFilterSelected] = useState<FilterValue>(
     TODO_FILTERS.ALL
   );
@@ -31,6 +32,7 @@ function App(): JSX.Element {
     const newTodos = todos.filter((todo) => todo.id !== id);
     setTodos(newTodos);
   };
+
   const handleCompleted = (id: string, completed: boolean): void => {
     const newTodos = todos.map((todo) => {
       if (todo.id === id) return { ...todo, completed };
@@ -38,6 +40,7 @@ function App(): JSX.Element {
     });
     setTodos(newTodos);
   };
+
   const handleFilterChange = (filter: FilterValue): void => {
     setFilterSelected(filter);
   };
@@ -47,17 +50,47 @@ function App(): JSX.Element {
     setTodos(newTodos);
   };
 
+  const handleAddTodo = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+
+    const newTodo: Todo = {
+      title: input,
+      id: crypto.randomUUID(),
+      completed: false,
+    };
+    setTodos([...todos, newTodo]);
+    setInput("");
+  };
+
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setInput(e.target.value);
+  };
   const filteredTodos = todos.filter((todo) => {
     if (filterSelected === TODO_FILTERS.ACTIVE) return !todo.completed;
     if (filterSelected === TODO_FILTERS.COMPLETED) return todo.completed;
     return todo;
   });
+
   const activeCount = todos.filter((todo) => !todo.completed).length;
   const completedCount = todos.filter((todo) => todo.completed).length;
+
   return (
     <div className="grid place-content-center">
       <div className="grid place-content-center gap-4 bg-gray-100 w-96 p-4 min-h-[300px]">
         <h1 className="text-2xl text-red-500 ">Hola mundo</h1>
+        <form onSubmit={handleAddTodo}>
+          <input
+            type="text"
+            onChange={(e) => {
+              handleChangeInput(e);
+            }}
+            placeholder="Ingrese Tarea"
+            value={input}
+            name=""
+            id=""
+          />
+          <input type="submit" value="Agregar" />
+        </form>
         <Todos
           onRemoveTodo={handleRemove}
           todos={filteredTodos}
